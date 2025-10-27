@@ -20,8 +20,8 @@
 				"${vex_sdkIncludes}"
 			],
 			"compilerPath": "${vex_compilerPath}",
-			"cStandard": "gnu99",
-			"cppStandard": "gnu++11",
+			"cStandard": "c17",
+			"cppStandard": "c++17",
 			"intelliSenseMode": "windows-clang-x86"
 		},
 		{
