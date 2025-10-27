@@ -8,6 +8,7 @@ private:
     //Configuration
     const double MOUNTING_ANGLE = 45.0; //deg
     const double TRACK_WHEEL_R = 2.75 * 25.4 / 2.0; //mm
+    const double TRACK_WHEEL_BASE = 203.5; //mm
     const double ODOM_X_OFFSET = 0; //mm
     const double ODOM_Y_OFFSET = -89.45; //mm
     const int UPDATE_TIME = 5; //ms

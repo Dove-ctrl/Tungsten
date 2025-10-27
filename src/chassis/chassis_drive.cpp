@@ -106,6 +106,8 @@ void chassis::MovingParametersDrive(){ //运动参数更新驱动
 
 void odometry::Update(){
     const double dt = UPDATE_TIME * 0.001;   
+    static double gyro_lpf_z1 = 0.0;
+    static const double gyro_lpf_alpha = 0.7; 
 
     double delta_encoderL = 0.0;
     double delta_encoderR = 0.0;
@@ -113,9 +115,13 @@ void odometry::Update(){
     double prev_encoderR = 0.0;
 
     while(true){
-        // 传感器数据捕获
-        double gyro_angular_velocity = Inertial.gyroRate(axisType::zaxis , velocityUnits::dps) * DEG_TO_RAD;
+        // IIR滤波
+        double gyro_raw = Inertial.gyroRate(axisType::zaxis, velocityUnits::dps) * DEG_TO_RAD;
 
+        double gyro_angular_velocity = gyro_lpf_alpha * gyro_lpf_z1 + (1.0 - gyro_lpf_alpha) * gyro_raw;
+        gyro_lpf_z1 = gyro_angular_velocity;
+
+        // 编码器增量计算
         delta_encoderL = EncoderL.rotation(rotationUnits::deg) - prev_encoderL;
         delta_encoderR = EncoderR.rotation(rotationUnits::deg) - prev_encoderR;
         prev_encoderL = EncoderL.rotation(rotationUnits::deg);
